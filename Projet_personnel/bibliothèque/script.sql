@@ -9,17 +9,22 @@ CREATE TABLE Livre (
   id_livre bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   nom VARCHAR,
   type VARCHAR,
-  genre VARCHAR,
+  genre bigint REFERENCES Genre (id_genre) ON DELETE SET NULL,
   annee_de_sortie INTEGER,
   édition bigint REFERENCES Édition (id_édition) ON DELETE SET NULL,
   nombre_pages INTEGER
+  );
+
+CREATE TABLE Genre (
+  id_genre bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  nom VARCHAR NOT NULL
   );
 
 CREATE TABLE Exemplaire (
   id_exemplaire bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   id_livre bigint REFERENCES Livre (id_livre) ON DELETE SET NULL,
   état_du_exemplaire VARCHAR NOT NULL,
-  disponibilité iNTEGER
+  disponibilité INTEGER
   );
 
 CREATE TABLE Personne(
@@ -49,8 +54,15 @@ CREATE TABLE Abonnée (
   
 CREATE TABLE Emprunter (
   id_exemplaire bigint REFERENCES Exemplaire (id_exemplaire) ON DELETE SET NULL,
-  id_abonnée bigint REFERENCES Abonnée (id_abonnée) ON DELETE SET NULL
+  id_abonnée bigint REFERENCES Abonnée (id_abonnée) ON DELETE SET NULL,
+  date_de_Retour DATE 
   );
+  
+CREATE TABLE Dates (
+  date_de_Emprunt date AS IDENTITY PRIMARY KEY
+  );
+  
+
   
 
   
